@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import axiosInstance from "../utils/axios";
 
 function ResumeDetail() {
   const { id } = useParams();
@@ -18,8 +19,8 @@ function ResumeDetail() {
     const fetchAnalysis = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `http://localhost:5000/api/resume/${id}/full-analysis`,
+        const res = await axiosInstance.get(
+          `/api/resume/${id}/full-analysis`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setAnalysis(res.data);
@@ -35,8 +36,8 @@ function ResumeDetail() {
     setShowResources(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(
-        `http://localhost:5000/api/resume/${id}/resources`,
+      const res = await axiosInstance.get(
+        `/api/resume/${id}/resources`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setResources(res.data.resources);
@@ -52,8 +53,8 @@ function ResumeDetail() {
   setShowAts(true);
   try {
     const token = localStorage.getItem("token");
-    const res = await axios.get(
-      `http://localhost:5000/api/resume/${id}/ats-score`,
+    const res = await axiosInstance.get(
+      `/api/resume/${id}/ats-score`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     setAtsData(res.data);

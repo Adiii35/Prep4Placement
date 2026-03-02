@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import axiosInstance from "../utils/axios";
 
 function RegisterPage() {
   const [name, setName] = useState("");
@@ -16,7 +17,7 @@ function RegisterPage() {
     setLoading(true);
     setMessage("");
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axiosInstance.post("/api/auth/register", {
         name, email, password,
       });
       setSuccess(true);

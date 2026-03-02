@@ -17,9 +17,11 @@ function Dashboard() {
     const fetchResumes = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/resume/my-resumes", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const API = import.meta.env.VITE_API_URL;
+
+const res = await axios.get(`${API}/api/resume/my-resumes`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
         setResumes(res.data);
       } catch (err) {
         console.log(err);

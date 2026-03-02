@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import axiosInstance from "../utils/axios";
 
 function JobsPage() {
   const { id } = useParams();
@@ -15,8 +16,8 @@ function JobsPage() {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `http://localhost:5000/api/resume/${id}/jobs`,
+        const res = await axiosInstance.get(
+          `/api/resume/${id}/jobs`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setJobs(res.data.jobs);
