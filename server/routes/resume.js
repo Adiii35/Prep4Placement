@@ -12,18 +12,26 @@ const matchJob = require("../utils/jobMatcher");
 const generateAISummary = require("../utils/aiSummary");
 const getAISuggestions = require("../utils/geminiService");
 const scrapeJobs = require("../utils/jobScraper");
+const path = require("path");
 
 // Storage config
+// Create uploads folder safely (works on Render)
+const uploadDir = path.join(__dirname, "../uploads");
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 // Upload + Parse route
 router.post("/upload", authMiddleware, upload.single("resume"), async (req, res) => {
